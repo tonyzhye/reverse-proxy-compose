@@ -7,8 +7,9 @@ services:
     hostname: "test-whoami"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.entrypoints=web"
       - "traefik.http.routers.whoami.rule=Host(`${WHOAMI_SITE}`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=le"
 
 networks:
   default:
