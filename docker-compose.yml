@@ -1,0 +1,52 @@
+version: "3.3"
+
+services:
+  reverse-proxy:
+    image: "traefik:${TRAEFIK_VERSION}"
+    container_name: "${TRAEFIK_CONTAINER_NAME}"
+    restart: unless-stopped
+    command:
+      # Configure metrics
+      - "--entryPoints.metrics.address=:8082"
+      - "--metrics.prometheus.entryPoint=metrics"
+      # Docker configuration
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=reverse-public"
+      # Configure entrypoint
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      # Global HTTP -> HTTPS
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      # SSL configuration, use letsencrypt
+      - "--certificatesresolvers.le.acme.tlschallenge=true"
+      - "--certificatesresolvers.le.acme.email=${ACME_EMAIL}"
+      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
+      # Enable dashboard
+      - "--api.dashboard=true"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - reverse-public
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    extra_hosts: 
+      - host.docker.internal:172.17.0.1
+    labels:
+      # enable it
+      - "traefik.enable=true"
+      # dashboard & security configurations
+      - "traefik.http.routers.traefik.rule=Host(`${DASHBOARD_URL}`)"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.tls.certresolver=le"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.middlewares=traefik-auth"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=${DASHBOARD_USER}:${DASHBOARD_PASSWORD_HASH}"
+
+networks:
+  reverse-public:
+    external: true

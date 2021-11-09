@@ -1,0 +1,8 @@
+### Python files ###
+*.pyc
+/log/
+
+### Local secret files ###
+.env
+
+/letsencrypt/

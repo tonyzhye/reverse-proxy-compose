@@ -1,0 +1,30 @@
+#
+# Traefik version
+#
+TRAEFIK_VERSION=V2.5
+
+#
+# Reverse proxy container name
+#
+TRAEFIK_CONTAINER_NAME=reverse-traefik
+
+#
+# Domain email
+#
+ACME_EMAIL=no-reply@yoursite.com
+
+#
+# Traefik dashboard url
+#
+DASHBOARD_URL=dashboard-ui.yoursite.com
+
+#
+# Traefik dashboard user / password
+#
+DASHBOARD_USER=admin
+DASHBOARD_PASSWORD_HASH=secret
+
+#
+# Test whoamid site
+#
+WHOAMI_SITE=whoami.yoursite.com
