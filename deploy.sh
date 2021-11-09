@@ -21,8 +21,7 @@ help()
 deploy_up()
 {
     # Create network if not exists
-    docker network inspect reverse-public >/dev/null 2>&1 || \
-        docker create network reverse-public 
+    docker create network reverse-public  || true
 
     echo "start services"
     docker-compose up -d
