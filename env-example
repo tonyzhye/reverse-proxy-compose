@@ -1,7 +1,7 @@
 #
 # Traefik version
 #
-TRAEFIK_VERSION=V2.5
+TRAEFIK_VERSION=v2.5
 
 #
 # Reverse proxy container name
