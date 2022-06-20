@@ -25,22 +25,22 @@ deploy_up()
         docker network create reverse-public 
 
     echo "start services"
-    docker-compose up -d
+    docker compose up -d
 }
 
 deploy_down()
 {
-    docker-compose down
+    docker compose down
 }
 
 deploy_status()
 {
-    docker-compose ps
+    docker compose ps
 }
 
 deploy_test()
 {
-    docker-compose -f whoami-docker-compose.yml up
+    docker compose -f whoami-docker-compose.yml up
 }
 
 ################################################################################

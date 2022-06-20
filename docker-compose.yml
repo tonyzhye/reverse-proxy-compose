@@ -45,7 +45,7 @@ services:
       - "traefik.http.routers.traefik.tls.certresolver=le"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.middlewares=traefik-auth"
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=${DASHBOARD_USER}:${DASHBOARD_PASSWORD_HASH}"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$$y9DEl4Yf$$PD8skXr0t7OFdffB6lQSM0"
 
 networks:
   reverse-public:
