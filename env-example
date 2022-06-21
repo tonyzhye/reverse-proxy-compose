@@ -1,7 +1,7 @@
 #
 # Traefik version
 #
-TRAEFIK_VERSION=v2.5
+TRAEFIK_VERSION=latest
 
 #
 # Reverse proxy container name
@@ -12,6 +12,11 @@ TRAEFIK_CONTAINER_NAME=reverse-traefik
 # Domain email
 #
 ACME_EMAIL=no-reply@yoursite.com
+
+#
+# Traefik certs dumper configurations
+CERTS_DUMPER_VERSION=latest
+CERTS_DUMPER_CONTAINER_NAME=traefik-cert-dumper
 
 #
 # Traefik dashboard url
@@ -25,6 +30,6 @@ DASHBOARD_USER=admin
 DASHBOARD_PASSWORD_HASH=secret
 
 #
-# Test whoamid site
+# Test whoami site
 #
 WHOAMI_SITE=whoami.yoursite.com

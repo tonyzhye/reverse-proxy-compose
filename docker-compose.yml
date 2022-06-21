@@ -46,6 +46,19 @@ services:
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.middlewares=traefik-auth"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$$y9DEl4Yf$$PD8skXr0t7OFdffB6lQSM0"
+  
+  traefik-certs-dumper:
+    image: ldez/traefik-certs-dumper:${TRAEFIK_CERTS_DUMPER_VERSION}v2.7.4
+    entrypoint: sh -c '
+      apk add jq
+      ; while ! [ -e /data/acme.json ]
+      || ! [ `jq ".[] | .Certificates | length" /data/acme.json` != 0 ]; do
+      sleep 1
+      ; done
+      && traefik-certs-dumper file --version v2 --watch
+      --source /data/acme.json --dest /data/certs'
+    volumes:
+      - "./letsencrypt:/data"
 
 networks:
   reverse-public:
