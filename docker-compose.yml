@@ -48,7 +48,8 @@ services:
       - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$$y9DEl4Yf$$PD8skXr0t7OFdffB6lQSM0"
   
   traefik-certs-dumper:
-    image: ldez/traefik-certs-dumper:${TRAEFIK_CERTS_DUMPER_VERSION}v2.7.4
+    image: ldez/traefik-certs-dumper:${CERTS_DUMPER_VERSION}
+    container_name: "${CERTS_DUMPER_CONTAINER_NAME}"
     entrypoint: sh -c '
       apk add jq
       ; while ! [ -e /data/acme.json ]
