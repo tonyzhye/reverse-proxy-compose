@@ -56,8 +56,8 @@ services:
       || ! [ `jq ".[] | .Certificates | length" /data/acme.json` != 0 ]; do
       sleep 1
       ; done
-      && traefik-certs-dumper file --version v2 --watch
-      --source /data/acme.json --dest /data/certs'
+      && traefik-certs-dumper file --version v2 --watch --domain-subdir=true
+      --source /data/acme.json --dest /data/dumper'
     volumes:
       - "./letsencrypt:/data"
 
